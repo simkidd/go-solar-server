@@ -11,6 +11,7 @@ const authRoutes = require("./routes/authRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const categoryRoutes = require("./routes/categoriesRoutes");
 const productRoutes = require("./routes/productsRoutes");
+const blogRoutes = require("./routes/blogRoutes");
 
 const origin = ["http://localhost:3000", "https://www.gosolar.ng"];
 const app = express();
@@ -43,6 +44,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/blogs", blogRoutes);
 
 app.get("/", (req, res) => {
   res.send("<h3>GO_SOLAR: server running...</h3>");

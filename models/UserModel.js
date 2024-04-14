@@ -47,6 +47,11 @@ const UserSchema = new Schema(
       type: Boolean,
       default: false,
     },
+
+    isAdmin: {
+      type: Boolean,
+      default: false,
+    },
     //if user has verified the email provided
     is_verified: {
       type: Boolean,

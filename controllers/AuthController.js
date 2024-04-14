@@ -102,7 +102,8 @@ const signupUser = async (req, res, next) => {
     // const verificationCode = await user.getVerificationCode();
     await user.save();
     const tokenWithId = `${verificationToken}${user._id}`;
-    const host = `${req.protocol}://${req.get("host")}`;
+    // const host = `${req.protocol}://${req.get("host")}`;
+    const host = config.HOMEPAGE;
     const verificationUrl = `${host}/account/verify/${tokenWithId}`;
 
     // *send email for user to verify account before being able to login
@@ -189,8 +190,9 @@ const forgotPassword = async (req, res, next) => {
     await user.save();
 
     //create reset link
-    const host = `${req.protocol}://${req.get("host")}`;
-    const resetURL = `${host}/resetpassword/${resetToken}`;
+    // const host = `${req.protocol}://${req.get("host")}`;
+    const host = config.HOMEPAGE;
+    const resetURL = `${host}/account/reset-password/${resetToken}`;
     console.log(`sending reset password email to ${email}...`);
 
     try {
@@ -247,7 +249,8 @@ const requestUserVerification = async (req, res, next) => {
     await user.save();
 
     const tokenWithId = `${verificationToken}${user._id}`;
-    const host = `${req.protocol}://${req.get("host")}`;
+    // const host = `${req.protocol}://${req.get("host")}`;
+    const host = config.HOMEPAGE;
     const verificationUrl = `${host}/account/verify/${tokenWithId}`;
 
     sendEmail({
