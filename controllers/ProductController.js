@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const Product = require("../models/ProductModel");
 const ErrorResponse = require("../utils/errorResponse");
 const config = require("../utils/config");
-const { slugify } = require("../utils/helpers.js");
+const { slugify, generateRandomCode } = require("../utils/helpers.js");
 const { addProductSchema } = require("../utils/validationSchemas");
 const { firstLetterInStringToUppercase } = require("../utils/helpers");
 const { cloudinary } = require("../utils/cloudinary");
@@ -12,7 +12,7 @@ const CategoryModel = require("../models/CategoryModel");
 //get all products
 exports.getAllProducts = async (req, res, next) => {
   try {
-    const products = await Product.find({ isDeleted: false })
+    const products = await Product.find({ isDeleted: false, isPublished: true })
       .populate(["category"])
       .sort({
         createdAt: -1,
@@ -39,6 +39,8 @@ exports.addProducts = async (req, res, next) => {
       quantityInStock,
       brand,
       additionalInfo,
+      outsideLocationDeliveryFee,
+      withinLocationDeliveryFee,
     } = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(category)) {
@@ -120,7 +122,7 @@ exports.addProducts = async (req, res, next) => {
 
     const productData = {
       name: name.toUpperCase(),
-      slug: slugify(name),
+      slug: `${slugify(name)}-${generateRandomCode(4)}`,
       description,
       additionalInfo,
       category,
@@ -128,6 +130,8 @@ exports.addProducts = async (req, res, next) => {
       price,
       brand,
       images: images_uploads,
+      outsideLocationDeliveryFee,
+      withinLocationDeliveryFee,
     };
 
     const newProduct = await Product.create(productData);
@@ -391,6 +395,35 @@ exports.updateProductImage = async (req, res, next) => {
         )
       );
     }
+  } catch (error) {
+    return next(error);
+  }
+};
+
+exports.getProduct = async (req, res, next) => {
+  try {
+    const { productid } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(productid)) {
+      return next(
+        new ErrorResponse("Invalid product ID!", 400, "validationError")
+      );
+    }
+
+    const product = await Product.findOne({ _id: productid, isDeleted: false });
+
+    if (!product) {
+      return res.status(404).json({
+        success: false,
+        message: "Product not found!",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Product fetch successfull",
+      product,
+    });
   } catch (error) {
     return next(error);
   }

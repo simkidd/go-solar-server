@@ -8,7 +8,7 @@ const { firstLetterInStringToUppercase } = require("../utils/helpers");
 //create category
 exports.addCategory = async (req, res, next) => {
   try {
-    const { name } = req.body;
+    const { name, description } = req.body;
 
     //validate user input
     try {
@@ -32,6 +32,7 @@ exports.addCategory = async (req, res, next) => {
     const categoryData = {
       slug: slugify(name),
       name: firstLetterInStringToUppercase(name),
+      description,
     };
 
     // console.log("catData::", categoryData);

@@ -32,6 +32,14 @@ const ProductSchema = new Schema(
       type: Number,
       required: true,
     },
+    withinLocationDeliveryFee: {
+      type: Number,
+      required: true,
+    },
+    outsideLocationDeliveryFee: {
+      type: Number,
+      required: true,
+    },
 
     slug: {
       type: String,
@@ -45,6 +53,10 @@ const ProductSchema = new Schema(
       required: true,
     },
     isDeleted: {
+      type: Boolean,
+      default: false,
+    },
+    isPublished: {
       type: Boolean,
       default: false,
     },

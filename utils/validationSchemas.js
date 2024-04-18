@@ -24,6 +24,7 @@ exports.signupValidationSchema = yup.object().shape({
 //category schema validation
 exports.categoryValidationSchema = yup.object().shape({
   name: yup.string().required().min(3).max(30),
+  description: yup.string().required().min(5).max(300),
 });
 
 //url validation schema
@@ -70,13 +71,20 @@ exports.validateArrayOfStrings = function validateStringArray(
   }
   return {
     valid: false,
-    cause: `all items must have a minimum of ${min} charachters, and maximum of ${max} characters each!`,
+    cause: `all ${field} must have a minimum of ${min} characters, and maximum of ${max} characters each!`,
   };
 };
 
 exports.addProductSchema = yup.object().shape({
   name: yup.string().required().min(3).max(80),
-  description: yup.string().required().min(5).max(350),
+  description: yup.string().required().min(5).max(650),
   price: yup.number().required().min(50).max(100000000),
   quantityInStock: yup.number().required().min(1).max(1000000),
+  withinLocationDeliveryFee: yup.number().required().min(50).max(100000000),
+  outsideLocationDeliveryFee: yup.number().required().min(50).max(100000000),
+});
+
+exports.createBlogValidationSchema = yup.object().shape({
+  title: yup.string().required().min(3).max(120),
+  author: yup.string().required().min(3).max(100),
 });

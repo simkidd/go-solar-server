@@ -29,3 +29,11 @@ exports.firstLetterInStringToUppercase = (string) => {
 exports.containsCharacter = (string, character) => {
   return string.includes(character);
 };
+
+exports.generateRandomCode = (numDigits) => {
+  let min = Math.pow(10, numDigits - 1);
+  let max = Math.pow(10, numDigits) - 1;
+
+  const randomCode = Math.floor(Math.random() * (max - min + 1)) + min;
+  return randomCode.toString().padStart(numDigits, "0");
+};

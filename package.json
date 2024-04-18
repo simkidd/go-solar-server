@@ -24,6 +24,7 @@
     "nodemailer": "^6.9.13",
     "nodemailer-express-handlebars": "^6.1.2",
     "nodemon": "^3.1.0",
+    "sanitize-html": "^2.13.0",
     "yup": "^1.4.0"
   }
 }
