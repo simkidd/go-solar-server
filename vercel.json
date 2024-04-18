@@ -1,9 +1,16 @@
 {
   "version": 2,
-  "rewrites": [
+  "name": "go-solar-api",
+  "builds": [
     {
-      "source": "/(.*)",
-      "destination": "/"
+      "src": "app.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/app.js"
     }
   ]
 }
