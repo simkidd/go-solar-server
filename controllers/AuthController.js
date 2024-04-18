@@ -183,7 +183,7 @@ const forgotPassword = async (req, res, next) => {
     const user = await User.findOne({ email });
     //checking if email actually exists
     if (!user) {
-      return next(new ErrorResponse("Unable to send email!", 404));
+      return next(new ErrorResponse("Email not registered!", 404));
     }
     const resetToken = await user.getResetToken();
 
