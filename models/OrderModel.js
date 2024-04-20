@@ -3,18 +3,29 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const OrderModel = new Schema(
   {
-    trackingId: {
-      type: String,
-      required: true,
-      unique: true,
-    },
     user: {
       type: Schema.ObjectId,
       ref: "User",
+      required: true,
+    },
+    trackingId: {
+      type: Schema.ObjectId,
+      ref: "TrackingId",
     },
     products: [
-      { product: { type: Schema.ObjectId, ref: "Product" }, qty: Number },
+      {
+        product: { type: Schema.ObjectId, ref: "Product" },
+        qty: Number,
+        deliveryFee: Number,
+      },
     ],
+
+    deliveryDetails: {
+      suiteNumber: String,
+      streetAddress: String,
+      city: String,
+      zipCode: String,
+    },
 
     totalPricePaid: {
       type: Number,
@@ -46,6 +57,11 @@ const OrderModel = new Schema(
       default: "Processing",
     },
 
+    trackingLevel: {
+      type: Number,
+      default: 1,
+    },
+
     isCancelled: {
       // an order can only be cancelled when it is stil in processing stage
       type: Boolean,
@@ -61,14 +77,14 @@ const OrderModel = new Schema(
     },
 
     //rejected: package was rejected (there was a problem with package). this action can only be triggered by delivery person or admin
-    isRejected: {
-      type: Boolean,
-      default: false,
-    },
+    // isRejected: {
+    //   type: Boolean,
+    //   default: false,
+    // },
 
-    rejectionReason: {
-      type: String,
-    },
+    // rejectionReason: {
+    //   type: String,
+    // },
 
     isCompleted: {
       type: Boolean,

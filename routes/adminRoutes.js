@@ -1,13 +1,18 @@
 const express = require("express");
 const upload = require("../utils/multer");
 const { addCategory } = require("../controllers/CategoryController.js");
-const { authorizeSuperAdmin } = require("../middlewares/authorizations");
+const {
+  authorizeSuperAdmin,
+  authorizeAdmin,
+} = require("../middlewares/authorizations");
 const {
   addProducts,
   updateProduct,
   updateProductImage,
 } = require("../controllers/ProductController.js");
 const BlogController = require("../controllers/BlogController");
+const OrderController = require("../controllers/OrderController");
+const AdminController = require("../controllers/AdminController");
 
 const router = express.Router();
 
@@ -43,6 +48,14 @@ router.patch(
   authorizeSuperAdmin,
   upload.single("updateImage"),
   BlogController.updateBlog
+);
+
+router.get("/all-orders", authorizeAdmin, OrderController.getAllOrders);
+
+router.get(
+  "/dashboard-stats",
+  authorizeAdmin,
+  AdminController.getDashboardStats
 );
 
 module.exports = router;

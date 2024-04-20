@@ -88,3 +88,9 @@ exports.createBlogValidationSchema = yup.object().shape({
   title: yup.string().required().min(3).max(120),
   author: yup.string().required().min(3).max(100),
 });
+
+exports.addOrderSchema = yup.object().shape({
+  paymentMethod: yup.string().required().min(3).max(80),
+  paymentReference: yup.string().required().min(3).max(80),
+  totalPricePaid: yup.number().required().min(50).max(100000000),
+});

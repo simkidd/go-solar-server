@@ -45,6 +45,17 @@ exports.sendEmail = (options) => {
       resetURL: options.resetURL,
       email: options.to,
       name: options.name,
+      items: options.items,
+      trackingId: options.trackingId,
+      subTotalPrice: options.subTotalPrice,
+      deliveryFee: options.deliveryFee,
+      totalCost: options.totalCost,
+      suiteNumber: options.suiteNumber,
+      streetAddress: options.streetAddress,
+      cityAndZip: options.cityAndZip,
+      estimatedDeliveryDate: options.estimatedDeliveryDate,
+      discountPercentageOff: options.discountPercentageOff,
+      appliedDiscount: options.appliedDiscount,
     },
   };
 
